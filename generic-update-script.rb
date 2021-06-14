@@ -27,6 +27,9 @@ directory = ENV["DIRECTORY_PATH"] || "/"
 # Branch to look at. Defaults to repo's default branch
 branch = ENV["BRANCH"]
 
+# private npm registry
+npm_registry=ENV["NPM_REGISTRY"]
+
 # Name of the package manager you'd like to do the update for. Options are:
 # - bundler
 # - pip (includes pipenv)
@@ -88,6 +91,12 @@ elsif ENV["AZURE_ACCESS_TOKEN"]
     "username" => "x-access-token",
     "password" => ENV["AZURE_ACCESS_TOKEN"]
   }
+
+  credentials << {
+      "type" => "npm_registry",
+      "registry" => npm_registry,
+      "token" => ENV["AZURE_ACCESS_TOKEN"]
+    }
 
   source = Dependabot::Source.new(
     provider: "azure",
