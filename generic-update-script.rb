@@ -167,7 +167,7 @@ dependencies.select(&:top_level?).each do |dep|
     credentials: credentials,
   )
 
-  puts "#{dep} needs update" if !checker.up_to_date?
+  puts "#{dep.name} needs update" if !checker.up_to_date?
 
   next if checker.up_to_date?
 
@@ -181,6 +181,7 @@ dependencies.select(&:top_level?).each do |dep|
     else :update_not_possible
     end
 
+  puts "Update not possible for #{dep.name}" if requirements_to_unlock == :update_not_possible
   next if requirements_to_unlock == :update_not_possible
 
   updated_deps = checker.updated_dependencies(
