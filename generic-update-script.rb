@@ -156,6 +156,8 @@ parser = Dependabot::FileParsers.for_package_manager(package_manager).new(
 )
 
 dependencies = parser.parse
+puts "dependencies: "
+print dependencies
 
 dependencies.select(&:top_level?).each do |dep|
   #########################################
@@ -167,7 +169,9 @@ dependencies.select(&:top_level?).each do |dep|
     credentials: credentials,
   )
 
-  next puts "Up to date, nothing to update." if checker.up_to_date?
+  puts "Up to date, nothing to update." if checker.up_to_date?
+
+  next if checker.up_to_date?
 
   requirements_to_unlock =
     if !checker.requirements_unlocked_or_can_be?
